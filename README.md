@@ -146,6 +146,43 @@ This part of the repo implements a simple character-level GPT using causal atten
 - **Arithmetic learning** (e.g. digit multiplication)
 - **Text generation** (e.g. story continuation from prompt)
 
+### 🔧 Core Component: `MaskedAttention`
+
+```python
+def forward(self, x):
+    Q, K, V = self.attention(x).split(self.embedding_dim, dim=2)
+    Q, K, V = self.split(Q), self.split(K), self.split(V)
+    scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(K.size(-1))
+    scores = self.apply_mask(scores)
+    att = F.softmax(scores, dim=-1)
+    y = self.drop1(att) @ V
+    return self.drop2(self.fc(y.transpose(1, 2).reshape(x.size())))
+```
+
+### 🔄 Model Forward
+
+```python
+def forward(self, inputs, target=None):
+    x = self.transformer(inputs)
+    logits = self.head(x)
+    if target is None:
+        return logits, None
+    loss = F.cross_entropy(logits.view(-1, logits.size(-1)), target.view(-1))
+    return logits, loss
+```
+
+### ✨ Text Generation
+
+```python
+def generate(self, inputs, required_chars, top_k=None):
+    for _ in range(required_chars):
+        logits = self(inputs[:, -self.block_size:])[0][:, -1, :]
+        pr F.softmax(logits, dim=-1)
+        next_char = torch.multinomial(probs, num_samples=1)
+        inputs = torch.cat((inputs, next_char), dim=1)
+    return inputs
+```
+
 ### Features:
 - Manual implementation of Masked (Causal) Self-Attention.
 - Multi-head attention, GELU activation, residual connections, and LayerNorm.
