@@ -19,6 +19,21 @@ This repository contains two independent deep learning projects implemented in P
 ---
 
 ## 🧠 Project 1: Transfer Learning for Image Classification
+### 🖼️ Finetuned Result
+
+Model trained by updating all layers of ResNet18:
+
+![Finetuned Result](./Images/Finetuned_Result.png)
+
+---
+
+### 🧊 Frozen Result
+
+Model trained by freezing feature extractor (only the final FC layer is trained):
+
+![Frozen Result](./Images/Frozen_Result.png)
+
+---
 
 This module demonstrates how to adapt a pretrained ResNet-18 model for binary classification (e.g., ants vs. bees). It includes both full fine-tuning and feature extractor freezing.
 
@@ -141,6 +156,15 @@ def train_model(device, dataloaders, dataset_sizes, model, criterion,
 ---
 
 ## 🔡 Project 2: Transformer-based GPT Language Model
+
+
+### 📜 Sample Text Generation Output
+
+Below is a generated sample using the GPT model with top-k sampling:
+
+![Transformer Result](./Images/Transformer_Result.png)
+
+---
 
 This part of the repo implements a simple character-level GPT using causal attention. It can be used for:
 - **Arithmetic learning** (e.g. digit multiplication)
