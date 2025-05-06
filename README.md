@@ -8,13 +8,14 @@ This repository contains two independent deep learning projects implemented in P
 ---
 
 ## 📁 Project Structure
-
+```
+.
 ├── transfer_learning.py # Core training functions for ResNet-based classifier
 ├── transfer_learning.ipynb # Notebook: training + visualizing classification model
 ├── transformer.py # Custom Transformer and GPT model implementation
 ├── transformer_trainer.py # GPT trainer and evaluator utilities
 ├── transformer.ipynb # Notebook: training and testing character-level GPT
-
+```
 ---
 
 ## 🧠 Project 1: Transfer Learning for Image Classification
